@@ -30,6 +30,15 @@ namespace QME.Basic.API
         {
             services.AddControllers();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+            services.AddCors(c =>
+            {
+                c.AddPolicy("AllowOrigin", options => options.AllowAnyOrigin());
+            });
+            //services.AddScoped<IMessageService, MessageService>();
+            //services.AddCors(c =>
+            //{
+            //    c.AddPolicy("AllowOrigin", options => options.WithOrigins("http://localhost:3000/"));
+            //});
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -39,6 +48,16 @@ namespace QME.Basic.API
             {
                 app.UseDeveloperExceptionPage();
             }
+            //app.UseCors(builder => builder
+            //   .AllowAnyOrigin()
+            //   .AllowAnyMethod()
+            //   .AllowAnyHeader()
+            //   .AllowCredentials());
+            app.UseDefaultFiles();
+            app.UseStaticFiles();
+            app.UseCors(x => x.AllowAnyHeader().AllowAnyMethod().WithOrigins("http://localhost:3000"));
+            //app.UseCors(options => options.AllowAnyOrigin());
+            //app.UseCors(options => options.WithOrigins("http://localhost:3000/"));
 
             app.UseHttpsRedirection();
 
@@ -57,3 +76,4 @@ namespace QME.Basic.API
         }
     }
 }
+

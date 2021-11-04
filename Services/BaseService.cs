@@ -35,6 +35,7 @@ namespace QME.Basic.API.Services
 
             if (string.Equals(res, appConstant.SuccessCode))
             {
+                //string customeQName = data.qName.Substring(0, newQueue.Qid.IndexOfAny("0123456789".ToCharArray()));
                 string customeQName = data.qName.Substring(0, newQueue.Qname.IndexOf(' ') != -1 ? newQueue.Qname.IndexOf(' ') : newQueue.Qname.Length - 1);
 
 
@@ -79,6 +80,16 @@ namespace QME.Basic.API.Services
                 result.Exception.Message = "Incorrect-queueID or DB down";
                 return result;
             }
+        }
+
+        public MaybeResult<bool> SearchForId(string qId)
+        {
+            var result = MaybeResult<bool>.None();
+            QueueDatum data = qContext.QueueData.Where(x => x.Qid == qId).FirstOrDefault();
+
+            result.Data = data != null ? true : false;
+            return result;
+
         }
     }
 }

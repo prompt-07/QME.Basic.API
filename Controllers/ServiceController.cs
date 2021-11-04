@@ -12,22 +12,17 @@ namespace QME.Basic.API.Controllers
 {
     [ApiController]
     [Route("[controller]")]
-    public class BasicController : ControllerBase
+    public class ServiceController : ControllerBase
     {
         private readonly BaseService baseServiceObj = new BaseService();
 
-        
-        [HttpPost("api/create-queue")]
-        public MaybeResult<QueueURL> CreateQueue(QueueModel data)
+        [HttpGet("searchcore/{qid}")]
+        public MaybeResult<bool> SearchCore(string qId)
         {
-            return baseServiceObj.AddQueue(data);
-        }
+            var result = MaybeResult<bool>.None();
+            result.Data = false;
 
-       
-        [HttpGet("get-queue/{qName}/{qId}")]
-        public MaybeResult<QueueModel> Test(string qName, string qId)
-        {
-            return baseServiceObj.GetQueue(qId);
+            return baseServiceObj.SearchForId(qId);
         }
 
     }
