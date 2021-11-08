@@ -7,8 +7,14 @@ namespace QME.Basic.API.Models
 {
     public class QueueURL
     {
-        public string qUrl { get; set; }
-
         public string qName { get; set; }
+
+        public string qId { get; set; }
+
+        public string qCreationDate { get; set; }
+        public string qCreationTime { get; set; }
+
+        public string noOfSubs { get; set; }
+
     }
 }

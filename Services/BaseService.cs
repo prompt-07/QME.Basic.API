@@ -18,7 +18,6 @@ namespace QME.Basic.API.Services
         }
         public MaybeResult<QueueURL> AddQueue(QueueModel data)
         {
-            //string urlQName = data.qName.Substring(0, data.qName.IndexOf(' ') != -1 ? data.qName.IndexOf(' ') : data.qName.Length-1);
             //Insert in DB
             var result = MaybeResult<QueueURL>.None();
 
@@ -35,15 +34,17 @@ namespace QME.Basic.API.Services
 
             if (string.Equals(res, appConstant.SuccessCode))
             {
-                //string customeQName = data.qName.Substring(0, newQueue.Qid.IndexOfAny("0123456789".ToCharArray()));
                 string customeQName = data.qName.Substring(0, newQueue.Qname.IndexOf(' ') != -1 ? newQueue.Qname.IndexOf(' ') : newQueue.Qname.Length - 1);
 
 
                 //After success create QUrl
                 QueueURL newQURL = new QueueURL()
                 {
-                    qUrl = $"{appConstant.BASEURL}/basic/get-queue/{customeQName}/{newQueue.Qid}",
-                    qName = newQueue.Qname
+                    qName = newQueue.Qname,
+                    qId = newQueue.Qid,
+                    qCreationDate = newQueue.QcreationDate.ToString(),
+                    qCreationTime = newQueue.QcreationTime.ToString(),
+                    noOfSubs = newQueue.NoOfSubscribers.ToString()
                 };
                 result.Data = newQURL;
                 return result;
