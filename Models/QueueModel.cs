@@ -14,5 +14,11 @@ namespace QME.Basic.API.Models
         public string qDesc { get; set; }
 
         public string qId { get; set; }
+
+        public string qCreationDate { get; set; }
+
+        public string qCreationTime { get; set; }
+
+        public string noOfSubs { get; set; } = "0";
     }
 }

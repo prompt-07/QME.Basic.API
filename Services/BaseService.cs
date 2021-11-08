@@ -12,6 +12,8 @@ namespace QME.Basic.API.Services
     {
         private readonly AppConstants appConstant = new AppConstants();
         private QMEContext qContext = new QMEContext();
+        private TimeSpan timeRes;
+
         public BaseService()
         {
             
@@ -20,13 +22,15 @@ namespace QME.Basic.API.Services
         {
             //Insert in DB
             var result = MaybeResult<QueueURL>.None();
-
             QueueDatum newQueue = new QueueDatum()
             {
                 Qguid = System.Guid.NewGuid().ToString(),
                 Qname = data.qName,
                 Qdesc = data.qDesc,
-                Qid = data.qId
+                Qid = data.qId,
+                QcreationDate = Convert.ToDateTime(data.qCreationDate),
+                QcreationTime = TimeSpan.TryParse(data.qCreationDate, out timeRes) ? timeRes : DateTime.Now.TimeOfDay,
+                NoOfSubscribers = (int?)Convert.ToInt64(data.noOfSubs)
             };
 
             qContext.QueueData.Add(newQueue);
@@ -34,16 +38,17 @@ namespace QME.Basic.API.Services
 
             if (string.Equals(res, appConstant.SuccessCode))
             {
-                string customeQName = data.qName.Substring(0, newQueue.Qname.IndexOf(' ') != -1 ? newQueue.Qname.IndexOf(' ') : newQueue.Qname.Length - 1);
+                //string customeQName = data.qName.Substring(0, newQueue.Qname.IndexOf(' ') != -1 ? newQueue.Qname.IndexOf(' ') : newQueue.Qname.Length - 1);
 
 
                 //After success create QUrl
                 QueueURL newQURL = new QueueURL()
                 {
+                    qCode = newQueue.Qguid,
                     qName = newQueue.Qname,
                     qId = newQueue.Qid,
-                    qCreationDate = newQueue.QcreationDate.ToString(),
-                    qCreationTime = newQueue.QcreationTime.ToString(),
+                    qCreationDate = newQueue.QcreationDate.ToString("dd-MM-yyyy"),
+                    qCreationTime = newQueue.QcreationTime.ToString(@"hh\:mm"),
                     noOfSubs = newQueue.NoOfSubscribers.ToString()
                 };
                 result.Data = newQURL;
@@ -70,7 +75,10 @@ namespace QME.Basic.API.Services
                 {
                     qId = data.Qid,
                     qName = data.Qname,
-                    qDesc = data.Qdesc
+                    qDesc = data.Qdesc,
+                    qCreationDate = data.QcreationDate.ToString(),
+                    qCreationTime = data.QcreationTime.ToString(),
+                    noOfSubs = data.NoOfSubscribers.ToString()
                 };
 
                 result.Data = response;
