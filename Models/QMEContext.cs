@@ -23,7 +23,7 @@ namespace QME.Basic.API.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                //#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
                 optionsBuilder.UseSqlServer("Data Source=DESKTOP-CTC18KI\\SQLEXPRESS;Initial Catalog=QME;Integrated Security=True");
             }
         }
@@ -41,6 +41,12 @@ namespace QME.Basic.API.Models
                     .HasMaxLength(255)
                     .IsUnicode(false)
                     .HasColumnName("QGuid");
+
+                entity.Property(e => e.QcreationDate)
+                    .HasColumnType("date")
+                    .HasColumnName("QCreationDate");
+
+                entity.Property(e => e.QcreationTime).HasColumnName("QCreationTime");
 
                 entity.Property(e => e.Qdesc).HasColumnName("QDesc");
 
