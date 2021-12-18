@@ -29,7 +29,7 @@ namespace QME.Basic.API.Services
                 Qdesc = data.qDesc,
                 Qid = data.qId,
                 QcreationDate = Convert.ToDateTime(data.qCreationDate),
-                QcreationTime = TimeSpan.TryParse(data.qCreationDate, out timeRes) ? timeRes : DateTime.Now.TimeOfDay,
+                QcreationTime = TimeSpan.TryParse(data.qCreationTime, out timeRes) ? timeRes : DateTime.Now.TimeOfDay,
                 NoOfSubscribers = (int?)Convert.ToInt64(data.noOfSubs)
             };
 
@@ -48,7 +48,7 @@ namespace QME.Basic.API.Services
                     qName = newQueue.Qname,
                     qId = newQueue.Qid,
                     qCreationDate = newQueue.QcreationDate.ToString("dd-MM-yyyy"),
-                    qCreationTime = newQueue.QcreationTime.ToString(@"hh\:mm"),
+                    qCreationTime = newQueue.QcreationTime.ToString(@"hh\:mm\:ss"),
                     noOfSubs = newQueue.NoOfSubscribers.ToString()
                 };
                 result.Data = newQURL;
@@ -88,6 +88,25 @@ namespace QME.Basic.API.Services
             {
                 result.Exception.Message = "Incorrect-queueID or DB down";
                 return result;
+            }
+        }
+
+        public bool AddSubscriber(SubData subscriberData)
+        {
+            var result = MaybeResult<QueueModel>.None();
+            QueueDatum data = qContext.QueueData.Where(x => x.Qguid == subscriberData.qCode).FirstOrDefault();
+
+            if (data != null)
+            {
+                data.NoOfSubscribers = data.NoOfSubscribers + 1;
+
+                string res = qContext.SaveChanges().ToString();
+                return true;
+            }
+            else
+            {
+                result.Exception.Message = "Incorrect-queueID or DB down";
+                return false;
             }
         }
 
