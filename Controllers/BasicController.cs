@@ -24,11 +24,17 @@ namespace QME.Basic.API.Controllers
         }
 
        
-        [HttpGet("get-queue/{qName}/{qId}")]
-        public MaybeResult<QueueModel> Test(string qName, string qId)
+        [HttpGet("addSub")]
+        public bool Test(SubData subData)
         {
-            return baseServiceObj.GetQueue(qId);
+            return baseServiceObj.AddSubscriber(subData);
         }
+
+        //[HttpGet("get-queue/{qName}/{qId}")]
+        //public MaybeResult<QueueModel> Test(string qName, string qId)
+        //{
+        //    return baseServiceObj.GetQueue(qId);
+        //}
 
     }
 
