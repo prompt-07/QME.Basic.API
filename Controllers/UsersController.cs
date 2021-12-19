@@ -1,12 +1,9 @@
 ﻿using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 using QME.Basic.API.Models;
+using QME.Basic.API.Models.CustomModels;
 using QME.Basic.API.Projects;
 using QME.Basic.API.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace QME.Basic.API.Controllers
 {
@@ -14,7 +11,7 @@ namespace QME.Basic.API.Controllers
     [Route("[controller]")]
     public class UsersController : Controller
     {
-        private readonly BaseService baseServiceObj = new BaseService();
+        private readonly UserService userServiceObj = new UserService();
 
         [HttpPost("authenticate")]
         public MaybeResult<bool> AuthenticateUser(UserCredentials cred)
@@ -23,6 +20,13 @@ namespace QME.Basic.API.Controllers
             result.Data = true;
 
             return result;
+        }
+
+
+        [HttpPost("register")]
+        public MaybeResult<UserObject> RegisterUser(SignUpModel newUser)
+        {
+            return userServiceObj.UpdateUser(newUser);
         }
 
     }

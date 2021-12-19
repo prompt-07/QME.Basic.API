@@ -20,7 +20,10 @@ namespace QME.Basic.API.Projects
 
         public MaybeException Exception { get; set; }
 
+        public bool IsException { get; set; } = false;
+
         public TResult Data { get; set; }
+
 
         public static MaybeResult<TResult> None() => new MaybeResult<TResult>();
 

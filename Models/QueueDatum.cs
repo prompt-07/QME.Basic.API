@@ -11,8 +11,9 @@ namespace QME.Basic.API.Models
         public string Qname { get; set; }
         public string Qdesc { get; set; }
         public string Qid { get; set; }
-        public DateTime QcreationDate { get; set; }
-        public TimeSpan QcreationTime { get; set; }
+        public DateTime? QcreationDate { get; set; }
+        public TimeSpan? QcreationTime { get; set; }
         public int? NoOfSubscribers { get; set; }
+        public string QcreatorId { get; set; }
     }
 }

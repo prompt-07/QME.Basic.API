@@ -18,6 +18,7 @@ namespace QME.Basic.API.Models
         }
 
         public virtual DbSet<QueueDatum> QueueData { get; set; }
+        public virtual DbSet<UserDatum> UserData { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -48,6 +49,11 @@ namespace QME.Basic.API.Models
 
                 entity.Property(e => e.QcreationTime).HasColumnName("QCreationTime");
 
+                entity.Property(e => e.QcreatorId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false)
+                    .HasColumnName("QCreatorId");
+
                 entity.Property(e => e.Qdesc).HasColumnName("QDesc");
 
                 entity.Property(e => e.Qid)
@@ -59,6 +65,41 @@ namespace QME.Basic.API.Models
                     .HasMaxLength(100)
                     .IsUnicode(false)
                     .HasColumnName("QName");
+            });
+
+            modelBuilder.Entity<UserDatum>(entity =>
+            {
+                entity.HasKey(e => e.Uname)
+                    .HasName("PK__UserData__B6DEAEE8562ECFE1");
+
+                entity.Property(e => e.Uname)
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UName");
+
+                entity.Property(e => e.ContactNumberA)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ContactNumberB)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EnterpriseId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Name)
+                    .HasMaxLength(255)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.PassKey)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.UserId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
             });
 
             OnModelCreatingPartial(modelBuilder);

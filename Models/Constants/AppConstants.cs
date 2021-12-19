@@ -10,7 +10,7 @@ namespace QME.Basic.API.Models.Constants
     {
         
         public string BASEURL = MyHttpContext.AppBaseUrl;
-        public string SuccessCode = "1";
-
+        public string SuccessCodeToDB = "1";
+        public string SuccessCode = "200";
     }
 }
