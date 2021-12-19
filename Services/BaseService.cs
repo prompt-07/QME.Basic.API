@@ -36,7 +36,7 @@ namespace QME.Basic.API.Services
             qContext.QueueData.Add(newQueue);
             string res = qContext.SaveChanges().ToString();
 
-            if (string.Equals(res, appConstant.SuccessCode))
+            if (string.Equals(res, appConstant.SuccessCodeToDB))
             {
                 //string customeQName = data.qName.Substring(0, newQueue.Qname.IndexOf(' ') != -1 ? newQueue.Qname.IndexOf(' ') : newQueue.Qname.Length - 1);
 
@@ -47,8 +47,8 @@ namespace QME.Basic.API.Services
                     qCode = newQueue.Qguid,
                     qName = newQueue.Qname,
                     qId = newQueue.Qid,
-                    qCreationDate = newQueue.QcreationDate.ToString("dd-MM-yyyy"),
-                    qCreationTime = newQueue.QcreationTime.ToString(@"hh\:mm\:ss"),
+                    //qCreationDate = newQueue.QcreationDate.ToString("dd-MM-yyyy"),
+                    //qCreationTime = newQueue.QcreationTime.ToString(@"hh\:mm\:ss"),
                     noOfSubs = newQueue.NoOfSubscribers.ToString()
                 };
                 result.Data = newQURL;

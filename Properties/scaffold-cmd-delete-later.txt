@@ -42,3 +42,14 @@ TEST PAYLOADS
     "qCreationTime" : "16:10:10",
     "noOfSubs" : "1"
 }
+
+
+{
+  "name": "Rahul",
+  "enterpriseName": "HDFC BANK",
+  "mobileNumber": "+91 8888888888",
+  "enterpriseDescription": "DEMO",
+  "enterpriseLocation": "DEMO",
+  "enterpriseEmail": "DEMO",
+  "password": "password123"
+}

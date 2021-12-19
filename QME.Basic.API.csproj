@@ -13,5 +13,10 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="DataAccess\" />
+    <Folder Include="Services\Interfaces\" />
+  </ItemGroup>
+
 
 </Project>
