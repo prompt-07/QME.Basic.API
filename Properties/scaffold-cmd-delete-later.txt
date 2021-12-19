@@ -1,0 +1,44 @@
+Scaffold-DbContext "Data Source=DESKTOP-CTC18KI\SQLEXPRESS;Initial Catalog=QME;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
+Scaffold-DbContext "<ConnectionString>" Microsoft.EntityFrameworkCore.SqlServer -t <tablename> -f
+
+TEST PAYLOADS
+
+{
+    "qName" : "JaiMataDi Mitra Mandal",
+    "qDesc" : "just a demo",
+    "qId" : "JAIMAM7273"
+}
+{
+    "qName" : "JaiMataDi Mitra Mandal Pune",
+    "qDesc" : "just a demo",
+    "qId" : "JAIMAP7273"
+}
+{
+    "qName" : "Dr. Prathiba Gandhi Hospital",
+    "qDesc" : "just a demo",
+    "qId" : "DRPRAH7273"
+}
+
+
+{
+    "exception": null,
+    "data": {
+        "qCode": "7432fead-fe37-449e-8dd8-948bceb246e3",
+        "qName": "Rahuls Queue 2",
+        "qId": "RAHULQ2626",
+        "qCreationDate": "08-11-2021",
+        "qCreationTime": "16:38",
+        "noOfSubs": "1"
+    }
+}
+
+
+
+{
+    "qName" : "Rahuls Queue 2",
+    "qDesc" : "just a demo",
+    "qId" : "RAHULQ2626",
+    "qCreationDate" : "11-08-2021",
+    "qCreationTime" : "16:10:10",
+    "noOfSubs" : "1"
+}
