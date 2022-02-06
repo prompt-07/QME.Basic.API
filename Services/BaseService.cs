@@ -119,5 +119,46 @@ namespace QME.Basic.API.Services
             return result;
 
         }
+
+
+        public MaybeResult<bool> CustomerRegistraionService(CustomerDatum customer)
+        {
+            var result = MaybeResult<bool>.None();
+            Random rnd = new Random();
+            CustomerDatum newCustomer = new CustomerDatum()
+            {
+                FullName = customer.FullName,
+                MobileNumber = customer.MobileNumber,
+                EmailId = customer.EmailId,
+                ServicesDesc = customer.ServicesDesc,
+                TenantId = customer.TenantId,
+                RegistrationId = rnd.Next().ToString()
+            };
+
+            qContext.CustomerData.Add(newCustomer);
+            string res = qContext.SaveChanges().ToString();
+
+            if (string.Equals(res, appConstant.SuccessCodeToDB))
+            {
+                result.Data = true;
+            }
+            else
+                result.Data = false;
+
+
+            return result;
+        }
+
+
+
+        public MaybeResult<List<CustomerDatum>> GetCustomerService(string id)
+        {
+            var result = MaybeResult<List<CustomerDatum>>.None();
+            List<CustomerDatum> data = qContext.CustomerData.Where(x => x.TenantId == id).ToList<CustomerDatum>();
+            result.Data = data;
+            return result;
+        }
+
+
     }
 }

@@ -25,6 +25,19 @@ namespace QME.Basic.API.Controllers
             return baseServiceObj.SearchForId(qId);
         }
 
+
+        [HttpPost("customer-registration/")]
+        public MaybeResult<bool> CustomerRegistraion(CustomerDatum custObj)
+        {
+            return baseServiceObj.CustomerRegistraionService(custObj);
+        }
+
+
+        [HttpGet("get-customers-forqueue/{id}")]
+        public MaybeResult<List<CustomerDatum>> GetCustomers(string id)
+        {
+            return baseServiceObj.GetCustomerService(id);
+        }
     }
 
 }

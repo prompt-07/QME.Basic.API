@@ -17,6 +17,7 @@ namespace QME.Basic.API.Models
         {
         }
 
+        public virtual DbSet<CustomerDatum> CustomerData { get; set; }
         public virtual DbSet<QueueDatum> QueueData { get; set; }
         public virtual DbSet<UserDatum> UserData { get; set; }
 
@@ -32,6 +33,36 @@ namespace QME.Basic.API.Models
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasAnnotation("Relational:Collation", "SQL_Latin1_General_CP1_CI_AS");
+
+            modelBuilder.Entity<CustomerDatum>(entity =>
+            {
+                entity.HasKey(e => e.RegistrationId)
+                    .HasName("PK__Customer__6EF58810B9DD306A");
+
+                entity.Property(e => e.RegistrationId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FullName)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.MobileNumber)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ServicesDesc)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.TenantId)
+                    .HasMaxLength(20)
+                    .IsUnicode(false);
+            });
 
             modelBuilder.Entity<QueueDatum>(entity =>
             {

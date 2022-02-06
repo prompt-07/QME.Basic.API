@@ -1,6 +1,9 @@
 Scaffold-DbContext "Data Source=DESKTOP-CTC18KI\SQLEXPRESS;Initial Catalog=QME;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
 Scaffold-DbContext "<ConnectionString>" Microsoft.EntityFrameworkCore.SqlServer -t <tablename> -f
 
+
+Worked last time
+Scaffold-DbContext "Data Source=DESKTOP-CTC18KI\SQLEXPRESS;Initial Catalog=QME;Integrated Security=True" Microsoft.EntityFrameworkCore.SqlServer -OutputDir Models -f
 TEST PAYLOADS
 
 {
