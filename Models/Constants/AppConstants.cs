@@ -12,5 +12,6 @@ namespace QME.Basic.API.Models.Constants
         public string BASEURL = MyHttpContext.AppBaseUrl;
         public string SuccessCodeToDB = "1";
         public string SuccessCode = "200";
+        public string AutoQueueHelperText = "This is an auto-generated queue";
     }
 }

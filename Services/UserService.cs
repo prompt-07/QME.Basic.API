@@ -3,6 +3,7 @@ using QME.Basic.API.Models.Constants;
 using QME.Basic.API.Models.CustomModels;
 using QME.Basic.API.Projects;
 using QME.Basic.API.Services._Helpers;
+using System;
 
 namespace QME.Basic.API.Services
 {
@@ -11,15 +12,18 @@ namespace QME.Basic.API.Services
         private readonly AppConstants appConstant = new AppConstants();
         private BaserHelper baseHelper = new BaserHelper();
         private QMEContext qContext = new QMEContext();
+        private AppConstants constObj = new AppConstants();
+        private readonly BaseService baseServiceObj = new BaseService();
         public UserService()
         {
             
         }
 
 
-        public MaybeResult<UserObject> UpdateUser(SignUpModel user)
+        public MaybeResult<SignUpResponse> UpdateUser(SignUpModel user)
         {
-            var result = MaybeResult<UserObject>.None();
+            var result = MaybeResult<SignUpResponse>.None();
+            SignUpResponse response = new SignUpResponse();
             UserDatum newUser = new UserDatum() {
                 UserId = baseHelper.IDGenerator(),
                 Uname = user.Name,
@@ -37,11 +41,16 @@ namespace QME.Basic.API.Services
                 UserObject createdUser = new UserObject()
                 {
                     UserName = newUser.Name,
-                    UserEmail = newUser.Name,
+                    UserEmail = user.EnterpriseEmail,
                     UserId = newUser.UserId,
+                    EnterpriseId = newUser.EnterpriseId,
                     UserProfileUrl = ""
                 };
-                result.Data = createdUser;
+                response.User = createdUser;
+
+                response.InitialQueue = CreateQueue(newUser);
+                result.Data = response;
+
             }
             else
             {
@@ -51,5 +60,32 @@ namespace QME.Basic.API.Services
 
             return result;
         }
+
+        public QueueURL CreateQueue(UserDatum newUser)
+        {
+            #region CreateInitialQueue
+            QueueModel data = new QueueModel()
+            {
+                qName = generateSlug(newUser.EnterpriseId),
+                qId = newUser.EnterpriseId.Substring(0,7),
+                qDesc = constObj.AutoQueueHelperText,
+                qCreationDate = Convert.ToString(DateTime.UtcNow.Date),
+                qCreationTime = Convert.ToString(DateTime.Now.TimeOfDay),
+                noOfSubs = "0"
+            };
+
+            var newQueue = baseServiceObj.AddQueue(data);
+            if (!newQueue.IsException) {
+                return newQueue.Data;
+            }
+
+            return new QueueURL();
+            #endregion
+        }
+        string generateSlug(string str)
+        {            
+            return str.Replace(' ', '-');
+        }
     }
 }
+

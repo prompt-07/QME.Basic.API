@@ -14,5 +14,7 @@ namespace QME.Basic.API.Models.CustomModels
         public string UserEmail { get; set; }
 
         public string UserProfileUrl { get; set; }
+
+        public string EnterpriseId { get; set; }
     }
 }

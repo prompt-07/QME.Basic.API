@@ -24,7 +24,7 @@ namespace QME.Basic.API.Controllers
 
 
         [HttpPost("register")]
-        public MaybeResult<UserObject> RegisterUser(SignUpModel newUser)
+        public MaybeResult<SignUpResponse> RegisterUser(SignUpModel newUser)
         {
             return userServiceObj.UpdateUser(newUser);
         }
