@@ -71,8 +71,9 @@ namespace QME.Basic.API.Services
                 qDesc = constObj.AutoQueueHelperText,
                 qCreationDate = Convert.ToString(DateTime.UtcNow.Date),
                 qCreationTime = Convert.ToString(DateTime.Now.TimeOfDay),
-                noOfSubs = "0"
-            };
+                noOfSubs = "0",
+                QcreatorId = newUser.UserId
+    };
 
             var newQueue = baseServiceObj.AddQueue(data);
             if (!newQueue.IsException) {

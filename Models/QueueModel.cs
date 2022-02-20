@@ -20,5 +20,7 @@ namespace QME.Basic.API.Models
         public string qCreationTime { get; set; }
 
         public string noOfSubs { get; set; } = "0";
+
+        public string QcreatorId { get; set; }
     }
 }

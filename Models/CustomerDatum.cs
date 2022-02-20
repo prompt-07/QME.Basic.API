@@ -13,5 +13,6 @@ namespace QME.Basic.API.Models
         public string ServicesDesc { get; set; }
         public string TenantId { get; set; }
         public string RegistrationId { get; set; }
+        public string Stage { get; set; }
     }
 }

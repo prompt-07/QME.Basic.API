@@ -30,7 +30,8 @@ namespace QME.Basic.API.Services
                 Qid = data.qId,
                 QcreationDate = Convert.ToDateTime(data.qCreationDate),
                 QcreationTime = TimeSpan.TryParse(data.qCreationTime, out timeRes) ? timeRes : DateTime.Now.TimeOfDay,
-                NoOfSubscribers = (int?)Convert.ToInt64(data.noOfSubs)
+                NoOfSubscribers = (int?)Convert.ToInt64(data.noOfSubs),
+                QcreatorId = data.QcreatorId
             };
 
             qContext.QueueData.Add(newQueue);
@@ -159,6 +160,16 @@ namespace QME.Basic.API.Services
             return result;
         }
 
+        public MaybeResult<bool> UpdateCustomerState(string id)
+        {
+            var result = MaybeResult<bool>.None();
+            CustomerDatum data = qContext.CustomerData.Where(x => x.RegistrationId == id).FirstOrDefault<CustomerDatum>();
+            data.Stage = "2";
+            qContext.CustomerData.Update(data);
+            string res = qContext.SaveChanges().ToString();
+            result.Data = string.Equals(res, appConstant.SuccessCodeToDB) ? true : false;
+            return result;
+        }
 
     }
 }

@@ -59,8 +59,12 @@ namespace QME.Basic.API.Models
                     .HasMaxLength(100)
                     .IsUnicode(false);
 
+                entity.Property(e => e.Stage)
+                    .HasMaxLength(2)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.TenantId)
-                    .HasMaxLength(20)
+                    .HasMaxLength(100)
                     .IsUnicode(false);
             });
 
@@ -81,7 +85,7 @@ namespace QME.Basic.API.Models
                 entity.Property(e => e.QcreationTime).HasColumnName("QCreationTime");
 
                 entity.Property(e => e.QcreatorId)
-                    .HasMaxLength(20)
+                    .HasMaxLength(40)
                     .IsUnicode(false)
                     .HasColumnName("QCreatorId");
 
@@ -100,13 +104,12 @@ namespace QME.Basic.API.Models
 
             modelBuilder.Entity<UserDatum>(entity =>
             {
-                entity.HasKey(e => e.Uname)
-                    .HasName("PK__UserData__B6DEAEE8562ECFE1");
+                entity.HasKey(e => e.EnterpriseId)
+                    .HasName("PK__UserData__52DEA566BF7BEBEE");
 
-                entity.Property(e => e.Uname)
-                    .HasMaxLength(255)
-                    .IsUnicode(false)
-                    .HasColumnName("UName");
+                entity.Property(e => e.EnterpriseId)
+                    .HasMaxLength(100)
+                    .IsUnicode(false);
 
                 entity.Property(e => e.ContactNumberA)
                     .HasMaxLength(15)
@@ -116,10 +119,6 @@ namespace QME.Basic.API.Models
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
-                entity.Property(e => e.EnterpriseId)
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
-
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .IsUnicode(false);
@@ -127,6 +126,12 @@ namespace QME.Basic.API.Models
                 entity.Property(e => e.PassKey)
                     .HasMaxLength(20)
                     .IsUnicode(false);
+
+                entity.Property(e => e.Uname)
+                    .IsRequired()
+                    .HasMaxLength(255)
+                    .IsUnicode(false)
+                    .HasColumnName("UName");
 
                 entity.Property(e => e.UserId)
                     .HasMaxLength(100)
