@@ -32,13 +32,6 @@ namespace QME.Basic.API.Controllers
             return baseServiceObj.CustomerRegistraionService(custObj);
         }
 
-        //[HttpPost("update-customer")]
-        //public MaybeResult<bool> UpdateCustomer(CustomerDatum custObj)
-        //{
-        //    return baseServiceObj.CustomerRegistraionService(custObj);
-        //}
-
-
         [HttpGet("get-customers-forqueue/{id}")]
         public MaybeResult<List<CustomerDatum>> GetCustomers(string id)
         {

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -24,7 +25,9 @@ namespace QME.Basic.API.Projects
 
         public TResult Data { get; set; }
 
+        public int DataCount { get; set; } = 0;
 
+        public Meta MetaData { get; set; }
         public static MaybeResult<TResult> None() => new MaybeResult<TResult>();
 
     }

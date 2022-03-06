@@ -67,7 +67,7 @@ namespace QME.Basic.API.Services
             QueueModel data = new QueueModel()
             {
                 qName = generateSlug(newUser.EnterpriseId),
-                qId = newUser.EnterpriseId.Substring(0,7),
+                qId = newUser.EnterpriseId.Substring(0,4),
                 qDesc = constObj.AutoQueueHelperText,
                 qCreationDate = Convert.ToString(DateTime.UtcNow.Date),
                 qCreationTime = Convert.ToString(DateTime.Now.TimeOfDay),

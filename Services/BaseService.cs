@@ -1,4 +1,5 @@
-﻿using QME.Basic.API.Models;
+﻿using Newtonsoft.Json.Linq;
+using QME.Basic.API.Models;
 using QME.Basic.API.Models.Constants;
 using QME.Basic.API.Projects;
 using System;
@@ -133,7 +134,8 @@ namespace QME.Basic.API.Services
                 EmailId = customer.EmailId,
                 ServicesDesc = customer.ServicesDesc,
                 TenantId = customer.TenantId,
-                RegistrationId = rnd.Next().ToString()
+                RegistrationId = rnd.Next().ToString(),
+                Stage = "1"
             };
 
             qContext.CustomerData.Add(newCustomer);
@@ -157,6 +159,14 @@ namespace QME.Basic.API.Services
             var result = MaybeResult<List<CustomerDatum>>.None();
             List<CustomerDatum> data = qContext.CustomerData.Where(x => x.TenantId == id).ToList<CustomerDatum>();
             result.Data = data;
+            result.DataCount = data.Count();
+            dynamic metaObj = new JObject();
+            result.MetaData = new Meta() {
+                QueueMetaData = new QHelperData() {
+                    LiveQCount = getCount(data, 1),
+                    ServedCount = getCount(data, 2)
+                }
+            };
             return result;
         }
 
@@ -169,6 +179,19 @@ namespace QME.Basic.API.Services
             string res = qContext.SaveChanges().ToString();
             result.Data = string.Equals(res, appConstant.SuccessCodeToDB) ? true : false;
             return result;
+        }
+
+
+        public int getCount(List<CustomerDatum> dataList, int _type)
+        {
+            int currCount = 0;
+            foreach (var data in dataList) {
+                if (string.Equals(data.Stage, _type.ToString())) {
+                    currCount++;
+                }
+            }
+
+            return currCount;
         }
 
     }
