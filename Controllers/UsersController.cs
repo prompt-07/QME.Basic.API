@@ -14,12 +14,9 @@ namespace QME.Basic.API.Controllers
         private readonly UserService userServiceObj = new UserService();
 
         [HttpPost("authenticate")]
-        public MaybeResult<bool> AuthenticateUser(UserCredentials cred)
+        public MaybeResult<LoginResponse> AuthenticateUser(UserCredentials cred)
         {
-            var result = MaybeResult<bool>.None();
-            result.Data = true;
-
-            return result;
+            return userServiceObj.GetUserDetails(cred);
         }
 
 

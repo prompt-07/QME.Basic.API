@@ -135,7 +135,7 @@ namespace QME.Basic.API.Services
                 ServicesDesc = customer.ServicesDesc,
                 TenantId = customer.TenantId,
                 RegistrationId = rnd.Next().ToString(),
-                Stage = "1"
+                Stage = "0"
             };
 
             qContext.CustomerData.Add(newCustomer);
@@ -174,7 +174,7 @@ namespace QME.Basic.API.Services
         {
             var result = MaybeResult<bool>.None();
             CustomerDatum data = qContext.CustomerData.Where(x => x.RegistrationId == id).FirstOrDefault<CustomerDatum>();
-            data.Stage = "2";
+            data.Stage = (Int32.Parse(data.Stage)+1).ToString();
             qContext.CustomerData.Update(data);
             string res = qContext.SaveChanges().ToString();
             result.Data = string.Equals(res, appConstant.SuccessCodeToDB) ? true : false;

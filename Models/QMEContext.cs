@@ -119,6 +119,10 @@ namespace QME.Basic.API.Models
                     .HasMaxLength(15)
                     .IsUnicode(false);
 
+                entity.Property(e => e.EmailId)
+                    .HasMaxLength(30)
+                    .IsUnicode(false);
+
                 entity.Property(e => e.Name)
                     .HasMaxLength(255)
                     .IsUnicode(false);

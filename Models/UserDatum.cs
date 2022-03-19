@@ -14,5 +14,6 @@ namespace QME.Basic.API.Models
         public string PassKey { get; set; }
         public string Name { get; set; }
         public string UserId { get; set; }
+        public string EmailId { get; set; }
     }
 }

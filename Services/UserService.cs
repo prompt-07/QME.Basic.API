@@ -4,6 +4,7 @@ using QME.Basic.API.Models.CustomModels;
 using QME.Basic.API.Projects;
 using QME.Basic.API.Services._Helpers;
 using System;
+using System.Linq;
 
 namespace QME.Basic.API.Services
 {
@@ -18,7 +19,45 @@ namespace QME.Basic.API.Services
         {
             
         }
+        public MaybeResult<LoginResponse> GetUserDetails(UserCredentials userCreds)
+        {
+            var result = MaybeResult<LoginResponse>.None();
+            LoginResponse response = new LoginResponse();
+            UserDatum data = qContext.UserData.Where(x => x.EmailId == userCreds.UserName && x.PassKey == userCreds.Password).FirstOrDefault();
+            if (data != null){
+                UserObject user = new UserObject()
+                {
+                    UserName = data.Name,
+                    UserId = data.UserId,
+                    UserProfileUrl = "",
+                    EnterpriseId = data.EnterpriseId,
+                    UserEmail = data.EmailId
+                };
 
+                QueueDatum qdata = qContext.QueueData.Where(x => x.QcreatorId == data.UserId).FirstOrDefault();
+                if (qdata != null)
+                {
+                    QueueURL queue = new QueueURL()
+                    {
+                        qCode = qdata.Qguid,
+                        qName = qdata.Qname,
+                        qId = qdata.Qid,
+                        noOfSubs = Convert.ToString(qdata.NoOfSubscribers)
+                    };
+                    response.User = user;
+                    response.InitialQueue = queue;
+                    result.Data = response;
+                }
+                else {
+                    result.Exception.Message = "Queue not found";
+                }
+             }
+            else{
+                result.Exception.Message = "Login Failed or DB down";
+            }
+
+            return result;
+        }
 
         public MaybeResult<SignUpResponse> UpdateUser(SignUpModel user)
         {
@@ -28,6 +67,7 @@ namespace QME.Basic.API.Services
                 UserId = baseHelper.IDGenerator(),
                 Uname = user.Name,
                 Name = user.Name,
+                EmailId = user.EnterpriseEmail,
                 PassKey = user.Password,
                 EnterpriseId = user.EnterpriseName,
                 ContactNumberA = user.MobileNumber,
